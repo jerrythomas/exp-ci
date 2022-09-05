@@ -21,14 +21,18 @@ jobs:
           node-version: 16
       - name: Bump pre-release version
         if: ${{ github.ref == 'next' }}
-        run: npm run bump:next
+        run: |
+          echo "next"
+          echo ${{ github.ref }}
+          npm run bump:next
       - name: Bump release version
         if: ${{ github.ref == 'main' }}
-        run: npm run bump:patch
+        run: |
+          echo "patch"
+          echo ${{ github.ref }}
+          npm run bump:patch
       - name: Publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          # npm config set //registry.npmjs.org/:_authToken $NPM_AUTH_TOKEN
-          npm publish --ignore-scripts
+        run: npm publish --ignore-scripts
