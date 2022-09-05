@@ -25,7 +25,7 @@ jobs:
           git config --global user.name "Jerry Thomas"
       - name: Bump release version
         run: |
-          if [ '${{ github.ref }}' == 'refs/head/next' ]; then
+          if [ '${{ github.ref }}' -eq 'refs/head/next' ]; then
              npm version prerelease --preid=next
           else
              npm version patch
