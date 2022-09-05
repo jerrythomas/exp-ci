@@ -1,6 +1,6 @@
 {
   "name": "@jerrythomas/exp-ci",
-  "version": "1.0.0-next.0",
+  "version": "1.0.0-next.1",
   "description": "CI Experiments",
   "main": "index.json",
   "license": "MIT",
