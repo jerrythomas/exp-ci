@@ -8,6 +8,13 @@
     "prettier",
     "exp-ci"
   ],
+  "scripts": {
+    "format": "prettier --write --plugin-search-dir=. .",
+    "bump:patch": "npm version --patch",
+    "bump:minor": "npm version --minor",
+    "bump:major": "npm version --major",
+    "bump:next": "npm version --prerelease --preid=next"
+  },
   "publishConfig": {
     "access": "public"
   },
