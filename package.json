@@ -6,7 +6,8 @@
   "license": "MIT",
   "keywords": [
     "prettier",
-    "exp-ci"
+    "experiments",
+    "semantic version"
   ],
   "scripts": {
     "format": "prettier --write --plugin-search-dir=. .",
