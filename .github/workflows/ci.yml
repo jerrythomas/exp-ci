@@ -1,0 +1,32 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+      - next
+  pull_request:
+    branches:
+      - main
+      - next
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: corepack enable
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Bump pre-release version
+        if: ${{ github.ref == 'next' }}
+        run: npm run bump:next
+      - name: Bump release version
+        if: ${{ github.ref == 'main' }}
+        run: npm run bump:patch
+      - name: Publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --ignore-scripts
