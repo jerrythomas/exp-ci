@@ -1,7 +1,7 @@
 {
   "name": "@jerrythomas/exp-ci",
   "version": "1.0.0-next.0",
-  "description": "Prettier Config",
+  "description": "CI Experiments",
   "main": "index.json",
   "license": "MIT",
   "keywords": [
