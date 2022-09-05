@@ -4,29 +4,43 @@ on:
   push:
     branches:
       - main
+      - next
   pull_request:
     branches:
       - main
+      - next
 
 jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: corepack enable
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - name: Set author identity
-        run: |
-          git config --global user.email "me@jerrythomas.name"
-          git config --global user.name "Jerry Thomas"
-      - name: Bump release version
-        run: npm version patch
-      - name: Publish
+      - uses: codfish/semantic-release-action@v2
+        id: semantic
+        with:
+          branches: |
+            [
+              'main',
+              {
+                name: 'next',
+                prerelease: true
+              },
+            ]
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
-          npm publish --ignore-scripts
+
+      - run: echo ${{ steps.semantic.outputs.release-version }}
+      - run: echo "$OUTPUTS"
+        env:
+          OUTPUTS: ${{ toJson(steps.semantic.outputs) }}
+
+      - if: steps.semantic.outputs.new-release-published == 'true'
+      - run: |
+          echo $RELEASE_VERSION
+          echo $RELEASE_MAJOR
+          echo $RELEASE_MINOR
+          echo $RELEASE_PATCH
