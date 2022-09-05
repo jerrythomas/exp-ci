@@ -19,13 +19,13 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - name: text githib ref
-        run: echo ${{ github.ref }}
+      - name: Set author identity
+        run: |
+          git config --global user.email "me@jerrythomas.name"
+          git config --global user.name "Jerry Thomas"
       - name: Bump pre-release version
         if: ${{ github.ref }} == 'refs/head/next'
-        run: |
-          echo "next"
-          npm run bump:next
+        run: npm version prerelease --preid=next
       - name: Bump release version
         if: ${{ github.ref }} == 'refs/head/main'
         run: |
