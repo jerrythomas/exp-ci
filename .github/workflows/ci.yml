@@ -23,15 +23,13 @@ jobs:
         run: |
           git config --global user.email "me@jerrythomas.name"
           git config --global user.name "Jerry Thomas"
-      - name: Bump pre-release version
-        if: ${{ github.ref }} == 'refs/head/next'
-        run: npm version prerelease --preid=next
       - name: Bump release version
-        if: ${{ github.ref }} == 'refs/head/main'
         run: |
-          echo "patch"
-          echo ${{ github.ref }}
-          npm run bump:patch
+          if [ ${{ github.ref }} == 'refs/head/next' ]; then
+             npm version prerelease --preid=next
+          else
+             npm version patch
+          fi
       - name: Publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
