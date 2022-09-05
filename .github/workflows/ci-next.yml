@@ -1,12 +1,12 @@
-name: ci
+name: ci-next
 
 on:
   push:
     branches:
-      - main
+      - next
   pull_request:
     branches:
-      - main
+      - next
 
 jobs:
   ci:
@@ -22,7 +22,7 @@ jobs:
           git config --global user.email "me@jerrythomas.name"
           git config --global user.name "Jerry Thomas"
       - name: Bump release version
-        run: npm version patch
+        run: npm version prerelease --preid=next
       - name: Publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
