@@ -22,12 +22,12 @@ jobs:
       - name: text githib ref
         run: echo ${{ github.ref }}
       - name: Bump pre-release version
-        if: github.ref == 'refs/head/next'
+        if: ${{ github.ref }} == 'refs/head/next'
         run: |
           echo "next"
           npm run bump:next
       - name: Bump release version
-        if: github.ref == 'refs/head/main'
+        if: ${{ github.ref }} == 'refs/head/main'
         run: |
           echo "patch"
           echo ${{ github.ref }}
