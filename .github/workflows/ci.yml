@@ -19,14 +19,15 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
+      - name: text githib ref
+        run: echo ${{ github.ref }}
       - name: Bump pre-release version
-        if: ${{ github.ref == 'next' }}
+        if: ${{ github.ref }} == 'next'
         run: |
           echo "next"
-          echo ${{ github.ref }}
           npm run bump:next
       - name: Bump release version
-        if: ${{ github.ref == 'main' }}
+        if: ${{ github.ref }} == 'main'
         run: |
           echo "patch"
           echo ${{ github.ref }}
