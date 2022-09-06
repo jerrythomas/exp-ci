@@ -33,7 +33,7 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - run: |
-          if '${{github.ref}} = '/refs/heads/next'; then
+          if "${{github.ref}}" = "/refs/heads/next"; then
               npx release-it --preRelease=next
           else
               npx release-it -- minor
