@@ -32,6 +32,9 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - run: ${{ github.ref }}
+      - run: echo ${{ github.ref == 'next' }}
+      - run: echo ${{ github.ref == 'main' }}
       - run: npx release-it --minor
         if: ${{ github.ref == 'main' }}
         env:
