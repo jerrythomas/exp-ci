@@ -24,10 +24,7 @@ jobs:
           branches: |
             [
               'main',
-              {
-                name: 'next',
-                prerelease: true
-              },
+              'next'
             ]
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
