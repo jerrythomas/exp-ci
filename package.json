@@ -1,17 +1,15 @@
 {
   "name": "@jerrythomas/exp-ci",
-  "version": "1.0.0-next.5",
+  "version": "1.0.0-next.6",
   "description": "CI Experiments",
   "main": "index.json",
   "license": "MIT",
   "keywords": [
     "prettier",
-    "experiments",
-    "semantic version"
+    "experiments"
   ],
   "scripts": {
-    "format": "prettier --write --plugin-search-dir=. .",
-    "semantic-release": "semantic-release"
+    "format": "prettier --write --plugin-search-dir=. ."
   },
   "publishConfig": {
     "access": "public"
