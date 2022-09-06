@@ -33,12 +33,12 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - run: npx release-it --minor
-        if: ${{ github.ref == 'ref/heads/main' }}
+        if: ${{ github.ref == 'main' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - run: npx release-it --preRelease=next
-        if: ${{ github.ref == 'ref/heads/next' }}
+        if: ${{ github.ref == 'next' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
