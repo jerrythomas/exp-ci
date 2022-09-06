@@ -1,6 +1,6 @@
 {
   "name": "@jerrythomas/exp-ci",
-  "version": "1.0.0-next.1",
+  "version": "0.0.0-development",
   "description": "CI Experiments",
   "main": "index.json",
   "license": "MIT",
@@ -14,10 +14,14 @@
     "bump:patch": "npm version patch",
     "bump:minor": "npm version minor",
     "bump:major": "npm version major",
-    "bump:next": "npm version prerelease --preid=next"
+    "bump:next": "npm version prerelease --preid=next",
+    "semantic-release": "semantic-release"
   },
   "publishConfig": {
     "access": "public"
   },
-  "repository": "git@github.com:jerrythomas/exp-ci.git"
+  "repository": "git@github.com:jerrythomas/exp-ci.git",
+  "devDependencies": {
+    "semantic-release": "^19.0.5"
+  }
 }
