@@ -13,20 +13,29 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16]
+        pnpm-version: [7.x]
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: ${{ matrix.node-version }}
+      - name: Intall pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ matrix.pnpm-version }}
+      - name: Install dependencies
+        run: pnpm i
 
-      - name: git config
+      - name: Configure git
         run: |
           git config user.name "${GITHUB_ACTOR}"
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-      - name: Install packages
-        run: npm ci
       - name: Configure registry
         run: npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
         env:
@@ -35,9 +44,9 @@ jobs:
       - name: Publish
         run: |
           if [ ${{ github.ref == 'refs/heads/next' }} ]; then
-             npx release-it --preRelease=next
+             pnpx release-it --preRelease=next
           else
-             npx release-it --minor
+             pnpx release-it
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
