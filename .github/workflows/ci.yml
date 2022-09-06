@@ -33,8 +33,12 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - run: echo ${{ 'github.ref' }}
-      - run: echo ${{ 'github.ref' == 'refs/heads/next' }}
-      - run: echo '${{ github.ref }}' == 'refs/heads/main'
+      - run: |
+          if [ ${{ github.ref == 'refs/heads/next' }} ]; then
+             echo 'next'
+          else
+             echo main
+          fi
       - run: npx release-it --minor
         if: ${{ github.ref == 'refs/heads/main' }}
         env:
