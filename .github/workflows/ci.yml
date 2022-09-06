@@ -15,32 +15,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          # The Checkout actions at v2 and beyond prevent pushes as another user due to persist-credentials being set to true by default
+          # persist-credentials: false
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - uses: codfish/semantic-release-action@v2
-        id: semantic
-        with:
-          branches: |
-            [
-              'main',
-              {
-                name: 'next',
-                prerelease: true
-              },
-            ]
+
+      - name: git config
+        run: |
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+      - run: npm ci
+      - run: npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - run: echo ${{ steps.semantic.outputs.release-version }}
-      - run: echo "$OUTPUTS"
+      - run: |
+          if '${{github.ref}} = '/refs/heads/next'; then
+              npx release-it --preRelease=next
+          else
+              npx release-it -- minor
+          fi
         env:
-          OUTPUTS: ${{ toJson(steps.semantic.outputs) }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - if: steps.semantic.outputs.new-release-published == 'true'
-        run: |
-          echo $RELEASE_VERSION
-          echo $RELEASE_MAJOR
-          echo $RELEASE_MINOR
-          echo $RELEASE_PATCH
+

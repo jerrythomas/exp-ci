@@ -18,6 +18,6 @@
   },
   "repository": "git@github.com:jerrythomas/exp-ci.git",
   "devDependencies": {
-    "semantic-release": "^19.0.5"
+    "release-it": "^15.4.1"
   }
 }
