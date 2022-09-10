@@ -43,14 +43,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish
-        run: pnpx release-it -i
+        run: pnpx release-it
         if: github.ref == 'refs/heads/main'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-        #   else
-        #      pnpx release-it
-        #   fi
-
-
 
